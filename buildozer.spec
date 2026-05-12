@@ -6,6 +6,8 @@ source.dir =.
 source.include_exts = py,png,jpg,kv,atlas,csv
 source.exclude_exts = spec
 requirements = python3,kivy==2.1.0
+android.skip_update = True
+android.accept_sdk_license = True
 orientation = portrait
 version = 0.1
 android.archs = armeabi-v7a
