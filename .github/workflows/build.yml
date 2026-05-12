@@ -5,6 +5,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    env:
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
     steps:
       - uses: actions/checkout@v4
 
@@ -20,14 +22,15 @@ jobs:
           pip install --upgrade pip
           pip install Cython==0.29.33
 
-      - name: Accept Android SDK Licenses
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Build with Buildozer
         run: |
           pip install buildozer
-          buildozer android debug
+          yes | buildozer -v android debug
+        env:
+          BUILDOZER_ALLOW_ROOT: 1
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
